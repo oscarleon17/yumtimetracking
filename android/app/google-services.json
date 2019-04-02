@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "665347552047",
+    "firebase_url": "https://yumtracking.firebaseio.com",
+    "project_id": "yumtracking",
+    "storage_bucket": "yumtracking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665347552047:android:bb765dbf38e2f48b",
+        "android_client_info": {
+          "package_name": "com.yum.yum_time_tracking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrVKSujicHDsGvu5u1oJH5-oQTI5qQUaE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665347552047-7l4lvprjcro24j0ri9b5vnhk31tr2pne.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
