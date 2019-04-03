@@ -14,8 +14,10 @@ class Home extends StatefulWidget {
 }
 //array to hold the hours to submit
 var hours = [0,0,0];
+var tasks = <String>{"Hardware Support", "Software Support"};
+bool isCheck=false;
 class _HomeState extends State<Home> {
-  @override
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,9 +90,13 @@ class _HomeState extends State<Home> {
                       title: Text("Projects"),
                       children: <Widget>[
                         CheckboxListTile(
-                          value: true,
+                          value: isCheck,
                           title: Text('Hardware Support'),
-                          onChanged: (bool value){},
+                          onChanged: (bool value){setState(() {
+                            tasks.add("Hardware Support");
+                            //createHoursTile(tasks.elementAt(0),0);
+                            isCheck = value;
+                          });},
                         ),
                         CheckboxListTile(
                           value: true,
@@ -111,12 +117,17 @@ class _HomeState extends State<Home> {
                   ),
                   //how to create a task object
                   //these should be created based on the status of the checkboxes
-                  MyHours(nameOfTask: "Hardware Support", taskIndex: 0,),
-                  MyHours(nameOfTask: "Software Support", taskIndex: 1,),
+
+                  //MyHours(nameOfTask: "Hardware Support", taskIndex: 0,),
+                  //MyHours(nameOfTask: "Software Support", taskIndex: 1,),
+                  createHoursTile(tasks.elementAt(0), 0),
+                  createHoursTile(tasks.elementAt(1), 1),
+
 
                   //MyHours(nameOfTask: "Vacation", numHours: hours[2],),
                 ],
               ),
+
             ),
             flex: 14,
           ),
@@ -159,3 +170,14 @@ int totalNumberOfHours(){
   }
   return total;
 }
+MyHours createHoursTile(var nameOfTask, var index){
+  return MyHours(nameOfTask: nameOfTask, taskIndex: index,);
+}
+/*
+void iterateThroughListAndCreateTiles(){
+  var length = tasks.length;
+  for(int i=0; i<length;i++){
+    createHoursTile(tasks.elementAt(i), i);
+  }
+
+}*/
