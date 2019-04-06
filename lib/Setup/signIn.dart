@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yum_time_tracking/Pages/home.dart';
+import 'package:yum_time_tracking/Pages/reset.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -56,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
               _showEmailInput(),
               _showPasswordInput(),
               _showPrimaryButton(),
-              //_showSecondaryButton(),
+              _showSecondaryButton(),
               _showErrorMessage(),
             ],
           ),
@@ -131,6 +132,19 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
+  Widget _showSecondaryButton() {
+    return new FlatButton(
+      child: new Text('Forgot Password?',
+          style: new TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w300
+
+          )),
+
+      onPressed: resetPage
+    );
+  }
+
   Widget _showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
       return new Text(
@@ -147,50 +161,6 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
   }
-
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//      appBar: AppBar(
-//        title: Text('YUM! Timetracking'),
-//        centerTitle: true,
-//      ),
-//      body: Form(
-//        key: _formKey,
-//        child: Column(
-//          children: <Widget>[
-//            TextFormField(
-//              validator: (input){
-//                if(input.isEmpty){
-//                  return 'Please type a correct email format';
-//                }
-//              },
-//              onSaved: (input) => _email = input,
-//              decoration: InputDecoration(
-//                labelText: 'Email'
-//              ),
-//            ),
-//            TextFormField(
-//              validator: (input){
-//                if(input.length < 6){
-//                  return 'Please provide a password greater than six characters';
-//                }
-//              },
-//              onSaved: (input) => _password = input,
-//              decoration: InputDecoration(
-//                  labelText: 'Password'
-//              ),
-//              obscureText: true,
-//            ),
-//            RaisedButton(
-//              onPressed: signIn ,
-//              child: Text('Sign In'),
-//            )
-//          ],
-//        ),
-//      ),
-//    );
-//  }
 
   Future<void> signIn() async {
     final formState = _formKey.currentState;
@@ -223,4 +193,9 @@ class _LoginPageState extends State<LoginPage> {
 
     }
   }
+
+  void resetPage() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Reset()));
+  }
+
 }
