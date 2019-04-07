@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class Reset extends StatefulWidget {
   @override
@@ -53,13 +57,15 @@ class _ResetState extends State<Reset> {
             hintText: 'Email',
             icon: new Icon(
               Icons.mail,
-              color: Colors.grey,
+              color: Colors.red,
             )),
         validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
         onSaved: (value) => _email = value,
       ),
     );
   }
+
+  //TODO: Change page formatting, make it prettier.
 
   Widget _showPrimaryButton() {
     return new Padding(
@@ -72,7 +78,7 @@ class _ResetState extends State<Reset> {
             color: Colors.red,
             child: new Text(
                 'Reset Password', style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-            onPressed: null //resetPassword(),
+            onPressed: resetPassword,
           ),
         ));
   }
@@ -93,5 +99,32 @@ class _ResetState extends State<Reset> {
 //      );
 //    }
 //  }
+
+  void resetPassword( ) async {
+
+    final formState = _formKey.currentState;
+    setState(() {
+      _errorMessage = "";
+    });
+
+    if(formState.validate()){
+      formState.save();
+      try{
+        FirebaseAuth.instance.sendPasswordResetEmail(email: _email);
+
+      }catch(e){
+        print('Error: $e');
+        //TODO: Finish error implementation for reset password
+//        setState(() {
+//          if(_isIos){
+//            _errorMessage = e.details;
+//
+//          } else{
+//            _errorMessage = e.message;
+//          }
+//        });
+      }
+    }
+  }
 
 }

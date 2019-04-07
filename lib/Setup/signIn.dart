@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
             hintText: 'Email',
             icon: new Icon(
               Icons.mail,
-              color: Colors.grey,
+              color: Colors.red,
             )),
         validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
         onSaved: (value) => _email = value,
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
             hintText: 'Password',
             icon: new Icon(
               Icons.lock,
-              color: Colors.grey,
+              color: Colors.red,
             )),
         validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
         onSaved: (value) => _password = value,
@@ -185,6 +185,7 @@ class _LoginPageState extends State<LoginPage> {
           _isLoading = false;
           if(_isIos){
             _errorMessage = e.details;
+            //TODO: Figure out why incorrect email+password causes crash on iOS
           } else{
             _errorMessage = e.message;
           }
