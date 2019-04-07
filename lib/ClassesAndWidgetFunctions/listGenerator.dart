@@ -14,7 +14,7 @@ class ListBuilder extends State<CompleteList> {
         // Create a grid with 2 columns. If you change the scrollDirection to
         // horizontal, this would produce 2 rows.
         crossAxisCount: 1,
-        childAspectRatio: (6/1),
+        childAspectRatio: (4/1),
         // Generate 100 Widgets that display their index in the List
         children: List.generate(selectedTasks.length, (index) {
           return
