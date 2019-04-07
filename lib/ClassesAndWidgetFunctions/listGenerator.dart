@@ -33,8 +33,9 @@ class ListBuilder extends State<CompleteList> {
                         child: Center(
                           child: Text(selectedTasks.elementAt(index),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20.0),),
                         ),
-                        flex: 6,
+                        flex: 14,
                       ),
+                      Expanded(child: RaisedButton(onPressed: (){setState(() {hours[index]=(hours[index]-.5);});}, child: Text('-'),padding: EdgeInsets.all(0)),),
                       Expanded(
                         child: Column(
                           children: <Widget>[
@@ -53,7 +54,6 @@ class ListBuilder extends State<CompleteList> {
                                 child: Center(
                                   child: Text(
                                     hours[index].toString(),
-                                    //hourDisplay.text
                                   ),
                                 ),
                               ),
@@ -67,6 +67,7 @@ class ListBuilder extends State<CompleteList> {
                         ),
                         flex: 1,
                       ),
+                      Expanded(child: RaisedButton(onPressed: (){setState(() {hours[index]=(hours[index]+.5);});}, child:Text('+'),padding: EdgeInsets.all(0),),),
                     ],
                   ),
                 ),

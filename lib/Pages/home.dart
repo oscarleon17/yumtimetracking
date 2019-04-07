@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 }
 var currentDate = DateTime.now();
 //array to hold the hours to submit
-var hours = [0,0,0];
+var hours = [0.0,0.0,0.0];
 //var tasks = <String>{"Hardware Support", "Software Support", "Vacation"};
 var selectedTasks = <String>{};
 List<bool> selectedStates = [false, false, false, false,false];
@@ -155,22 +155,13 @@ class _HomeState extends State<Home> {
 
       appBar: AppBar(
         title: Text('YUM! Timekeeping'),
-        actions: <Widget>[
-          /*IconButton(
-            icon: Icon(Icons.shopping_cart),
-            tooltip: 'Open shopping cart',
-            onPressed: () {
-              // ...
-            },
-          ),*/
-        ],
       ),
       //drawer: Drawer(),
     );
   }
 }
-int totalNumberOfHours(){
-  int total=0;
+double totalNumberOfHours(){
+  double total=0;
   for(int i=0;i<hours.length;i++){
     total+=hours[i];
   }
