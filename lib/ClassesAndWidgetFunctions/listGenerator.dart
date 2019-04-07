@@ -40,17 +40,14 @@ class ListBuilder extends State<CompleteList> {
                         child: Column(
                           children: <Widget>[
                             //functioning as padding
-                            Container(
-                              height: 8.0,
-                              child: null,
-                            ),
+
                             //display the number of hours to be submitted for the task
                             Ink(
                               color: Colors.white,
                               child:
                               Container(
-                                height: 20.0,
-                                width: 20.0,
+                                height: 35.0,
+                                width: 30.0,
                                 child: Center(
                                   child: Text(
                                     hours[index].toString(),
@@ -59,10 +56,7 @@ class ListBuilder extends State<CompleteList> {
                               ),
                             ),
                             //functioning as padding
-                            Container(
-                              height: 8.0,
-                              child: null,
-                            ),
+
                           ],
                         ),
                         flex: 1,

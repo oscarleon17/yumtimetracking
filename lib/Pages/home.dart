@@ -137,16 +137,6 @@ class _HomeState extends State<Home> {
             flex: 18,
           ),
 
-          /*Expanded(
-              child: SizedBox.expand(
-                child: RaisedButton(
-                  color: Colors.grey.shade600,
-                  child: Text("Sumbit ${totalNumberOfHours().toString()} hours",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
-                  onPressed: (){},
-                ),
-              ),
-              flex: 2,
-            ),*/
           //should send the data from the array of hours, clear the array, and switch to the next day
           //currently just updates the display of the number of hours selected
           MySubmitButton(),
