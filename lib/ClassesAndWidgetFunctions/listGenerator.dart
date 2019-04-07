@@ -8,17 +8,13 @@ class CompleteList extends StatefulWidget{
 class ListBuilder extends State<CompleteList> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("List Generation"),
-      ),
-      body:
+    return
 
       GridView.count(
         // Create a grid with 2 columns. If you change the scrollDirection to
         // horizontal, this would produce 2 rows.
         crossAxisCount: 1,
-        childAspectRatio: (4/1),
+        childAspectRatio: (6/1),
         // Generate 100 Widgets that display their index in the List
         children: List.generate(selectedTasks.length, (index) {
           return
@@ -108,7 +104,7 @@ class ListBuilder extends State<CompleteList> {
           ),
             );
         }),
-      ),
+      );
 
 
 
@@ -200,6 +196,6 @@ class ListBuilder extends State<CompleteList> {
           );
         },
       ),*/
-    );
+
   }
 }
