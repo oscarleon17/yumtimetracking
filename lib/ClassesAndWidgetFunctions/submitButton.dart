@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Pages/home.dart';
-import '../Pages/testScreenForListGeneration.dart';
+import 'package:yum_time_tracking/ClassesAndWidgetFunctions/listGenerator.dart';
 
 
 class MySubmitButton extends StatefulWidget{
@@ -18,7 +18,7 @@ class MySubmitButtonState extends State<MySubmitButton>{
           //calls the function defined in main.dart and updates the text displayed via the setState function
           child: Text("Submit ${totalNumberOfHours().toString()} hours",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
           onPressed: (){setState(() {});
-            Navigator.push(context, MaterialPageRoute(builder: (context) => CompleteList()));
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => CompleteList()));
           },
         ),
       ),
