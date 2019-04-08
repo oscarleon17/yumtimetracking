@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../ClassesAndWidgetFunctions/submitButton.dart';
 import 'package:yum_time_tracking/ClassesAndWidgetFunctions/listGenerator.dart';
+import '../Setup/signIn.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -146,7 +147,48 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('YUM! Timekeeping'),
       ),
-      //drawer: Drawer(),
+      drawer: Drawer(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  UserAccountsDrawerHeader(
+                    accountName: Text("Testing"),
+                    accountEmail: Text("testing@testing.com",),
+                    currentAccountPicture: new GestureDetector(
+                      onTap: (){},
+                      child: CircleAvatar(
+                        backgroundColor: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              flex: 10,
+            ),
+            Expanded(
+              child: SizedBox.expand(
+                child: RaisedButton(
+                  onPressed: (){
+                    setState(() {});
+                    Navigator.of(context).pop();
+                    Navigator.of(super.context).pop();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                  },
+                  color: Colors.grey.shade600,
+                  child: Text("Signout",
+                    style: TextStyle(
+                        color: Colors.white,fontSize: 25.0
+                    ),
+                  ),
+                ),
+              ),
+              flex: 1,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
