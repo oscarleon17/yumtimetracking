@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../ClassesAndWidgetFunctions/hoursTile.dart';
 import '../ClassesAndWidgetFunctions/submitButton.dart';
+import 'package:yum_time_tracking/ClassesAndWidgetFunctions/listGenerator.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -12,12 +12,14 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+var currentDate = DateTime.now();
 //array to hold the hours to submit
-var hours = [0,0,0];
-var tasks = <String>{"Hardware Support", "Software Support"};
-bool isCheck=false;
-class _HomeState extends State<Home> {
+var hours = [0.0,0.0,0.0];
+//var tasks = <String>{"Hardware Support", "Software Support", "Vacation"};
+var selectedTasks = <String>{};
+List<bool> selectedStates = [false, false, false, false,false];
 
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,7 @@ class _HomeState extends State<Home> {
                       child: IconButton(
                         icon: Icon(Icons.arrow_left),
                         color: Colors.white,
-                        onPressed: (){},
+                        onPressed: (){setState(() {currentDate = currentDate.subtract(new Duration(days: 1));});},
                       ),
                     ),
                   ),
@@ -48,11 +50,14 @@ class _HomeState extends State<Home> {
                 //mockup for the date display
                 Expanded(
                   child: SizedBox.expand(
-                    child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black)
-                        ),
-                        child: Center(child: Text("3/7/19", style: TextStyle(fontSize: 30),),)
+                    child: GestureDetector(
+                      onTap:(){},
+                      child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black)
+                          ),
+                          child: Center(child: Text(getYearMonthDayFromDate(currentDate), style: TextStyle(fontSize: 30),),)
+                      ),
                     ),
                   ),
                   flex: 20,
@@ -68,7 +73,7 @@ class _HomeState extends State<Home> {
                       child: IconButton(
                         icon: Icon(Icons.arrow_right),
                         color: Colors.white,
-                        onPressed: (){},
+                        onPressed: (){setState(() {currentDate = currentDate.add(new Duration(days: 1));});},
                       ),
                     ),
                   ),
@@ -90,57 +95,48 @@ class _HomeState extends State<Home> {
                       title: Text("Projects"),
                       children: <Widget>[
                         CheckboxListTile(
-                          value: isCheck,
+                          value: selectedStates[0],
                           title: Text('Hardware Support'),
                           onChanged: (bool value){setState(() {
-                            tasks.add("Hardware Support");
+                            maintainList('Hardware Support', value);
                             //createHoursTile(tasks.elementAt(0),0);
-                            isCheck = value;
+                            selectedStates[0]=value;
                           });},
                         ),
                         CheckboxListTile(
-                          value: true,
+                          value: selectedStates[1],
                           title: Text('Software Support'),
-                          onChanged: (bool value){},
+                          onChanged: (bool value){setState(() {
+                            maintainList('Software Support', value);
+                            //createHoursTile(tasks.elementAt(0),0);
+                            selectedStates[1]=value;
+                          });},
                         ),
                         CheckboxListTile(
-                          value: false,
+                          value: selectedStates[2],
                           title: Text('Vacation'),
-                          onChanged: (bool value){},
+                          onChanged: (bool value){setState(() {
+                            maintainList('Vacation', value);
+                            //createHoursTile(tasks.elementAt(0),0);
+                            selectedStates[2]=value;
+                          });},
                         ),
                       ],
                     ),
                     color: Colors.white,
                   ),
+                  Container(height: 20,),
                   Container(
-                    height: 20.0,
+                    height: 600.0,
+                    child: CompleteList(),
                   ),
-                  //how to create a task object
-                  //these should be created based on the status of the checkboxes
-
-                  //MyHours(nameOfTask: "Hardware Support", taskIndex: 0,),
-                  //MyHours(nameOfTask: "Software Support", taskIndex: 1,),
-                  createHoursTile(tasks.elementAt(0), 0),
-                  createHoursTile(tasks.elementAt(1), 1),
-
-
-                  //MyHours(nameOfTask: "Vacation", numHours: hours[2],),
                 ],
               ),
 
             ),
-            flex: 14,
+            flex: 18,
           ),
-          /*Expanded(
-              child: SizedBox.expand(
-                child: RaisedButton(
-                  color: Colors.grey.shade600,
-                  child: Text("Sumbit ${totalNumberOfHours().toString()} hours",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
-                  onPressed: (){},
-                ),
-              ),
-              flex: 2,
-            ),*/
+
           //should send the data from the array of hours, clear the array, and switch to the next day
           //currently just updates the display of the number of hours selected
           MySubmitButton(),
@@ -149,35 +145,24 @@ class _HomeState extends State<Home> {
 
       appBar: AppBar(
         title: Text('YUM! Timekeeping'),
-        actions: <Widget>[
-          /*IconButton(
-            icon: Icon(Icons.shopping_cart),
-            tooltip: 'Open shopping cart',
-            onPressed: () {
-              // ...
-            },
-          ),*/
-        ],
       ),
-      drawer: Drawer(),
+      //drawer: Drawer(),
     );
   }
 }
-int totalNumberOfHours(){
-  int total=0;
+double totalNumberOfHours(){
+  double total=0;
   for(int i=0;i<hours.length;i++){
     total+=hours[i];
   }
   return total;
 }
-MyHours createHoursTile(var nameOfTask, var index){
-  return MyHours(nameOfTask: nameOfTask, taskIndex: index,);
+void maintainList(var nameOfTask, var selectionState){
+  if(selectionState)
+    selectedTasks.add(nameOfTask);
+  else
+    selectedTasks.remove(nameOfTask);
 }
-/*
-void iterateThroughListAndCreateTiles(){
-  var length = tasks.length;
-  for(int i=0; i<length;i++){
-    createHoursTile(tasks.elementAt(i), i);
-  }
-
-}*/
+String getYearMonthDayFromDate(var date){
+  return date.toString().split(" ")[0];
+}
