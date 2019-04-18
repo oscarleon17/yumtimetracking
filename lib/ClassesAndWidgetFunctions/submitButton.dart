@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Pages/home.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class MySubmitButton extends StatefulWidget{
@@ -13,15 +14,21 @@ class MySubmitButtonState extends State<MySubmitButton>{
     return Expanded(
       child: SizedBox.expand(
         child: RaisedButton(
-          color: Colors.grey.shade600,
+          color: Colors.black,
           //calls the function defined in main.dart and updates the text displayed via the setState function
-          child: Text("Submit ${totalNumberOfHours().toString()} hours",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
-          onPressed: (){setState(() {});
-            //Navigator.push(context, MaterialPageRoute(builder: (context) => CompleteList()));
-          },
+          child: Text("Submit ${totalNumberOfHours().toString()} hours",
+            
+            style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 17,
+                color: Colors.white
+            ),
+          ),
+          onPressed: sendData,
         ),
       ),
       flex: 2,
     );
   }
 }
+

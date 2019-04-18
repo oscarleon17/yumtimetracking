@@ -20,22 +20,41 @@ class ListBuilder extends State<CompleteList> {
           return
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
+
               child: Column(
               children:
               <Widget>[
                 Ink(
-                  color: Colors.blueGrey,
+                  color: Colors.red,
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     children: <Widget>[
                       //display the name of the task
                       Expanded(
                         child: Center(
-                          child: Text(selectedTasks.elementAt(index),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20.0),),
+                          child: Text(
+                            selectedTasks.elementAt(index),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18.0
+                            ),
+                          ),
                         ),
                         flex: 14,
                       ),
-                      Expanded(child: RaisedButton(onPressed: (){setState(() {hours[index]=(hours[index]-.5);});}, child: Text('-'),padding: EdgeInsets.all(0)),),
+                      Expanded(child: RaisedButton(onPressed: (){setState(() {
+                        if(hours[index] >= .5){
+                        hours[index]=(hours[index]-.5);
+                        } else {
+                          hours[index] =0;
+                        }
+                      }
+                        );
+                      }, child: Text('-'),
+                          padding: EdgeInsets.all(0)
+                      ),
+                      ),
                       Expanded(
                         child: Column(
                           children: <Widget>[
@@ -46,8 +65,8 @@ class ListBuilder extends State<CompleteList> {
                               color: Colors.white,
                               child:
                               Container(
-                                height: 35.0,
-                                width: 30.0,
+                                height: 36.0,
+                                width: 41.0,
                                 child: Center(
                                   child: Text(
                                     hours[index].toString(),
@@ -59,7 +78,7 @@ class ListBuilder extends State<CompleteList> {
 
                           ],
                         ),
-                        flex: 1,
+                        flex: 2,
                       ),
                       Expanded(child: RaisedButton(onPressed: (){setState(() {hours[index]=(hours[index]+.5);});}, child:Text('+'),padding: EdgeInsets.all(0),),),
                     ],
@@ -67,8 +86,8 @@ class ListBuilder extends State<CompleteList> {
                 ),
                 //MyHourSelectionRow(taskIndex: taskIndex),
                 Ink(
-                  color: Colors.blueGrey,
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  color: Colors.black,
+                  padding: EdgeInsets.symmetric(horizontal: 6.0),
                   //one button for each of the possible selections of hours
                   child: Row(
                     children: <Widget>[

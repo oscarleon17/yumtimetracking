@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../ClassesAndWidgetFunctions/submitButton.dart';
 import 'package:yum_time_tracking/ClassesAndWidgetFunctions/listGenerator.dart';
 import '../Setup/signIn.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 class Home extends StatefulWidget {
   const Home({
@@ -13,6 +16,7 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+
 var currentDate = DateTime.now();
 //array to hold the hours to submit
 var hours = [0.0,0.0,0.0];
@@ -37,7 +41,7 @@ class _HomeState extends State<Home> {
                     child:
                     Ink(
                       decoration: BoxDecoration(
-                        color: Colors.blueGrey,
+                        color: Colors.black,
                       ),
                       child: IconButton(
                         icon: Icon(Icons.arrow_left),
@@ -57,7 +61,15 @@ class _HomeState extends State<Home> {
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.black)
                           ),
-                          child: Center(child: Text(getYearMonthDayFromDate(currentDate), style: TextStyle(fontSize: 30),),)
+                          child: Center(
+                            child: Text(
+                              getYearMonthDayFromDate(currentDate),
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
                       ),
                     ),
                   ),
@@ -69,7 +81,7 @@ class _HomeState extends State<Home> {
                     child:
                     Ink(
                       decoration: BoxDecoration(
-                        color: Colors.blueGrey,
+                        color: Colors.black,
                       ),
                       child: IconButton(
                         icon: Icon(Icons.arrow_right),
@@ -86,7 +98,7 @@ class _HomeState extends State<Home> {
           ),
           Expanded(
             child: Ink(
-              color: Colors.black87,
+              color: Colors.white,
               //mockup for list of projects the user has been assigned to
               //Needs checkbox functionality implemented
               child: ListView(
@@ -124,7 +136,7 @@ class _HomeState extends State<Home> {
                         ),
                       ],
                     ),
-                    color: Colors.white,
+                    color: Colors.red,
                   ),
                   Container(height: 20,),
                   Container(
@@ -145,7 +157,7 @@ class _HomeState extends State<Home> {
       ),
 
       appBar: AppBar(
-        title: Text('YUM! Timekeeping'),
+        title: Text('YUM! Timetracking'),
       ),
       drawer: Drawer(
         child: Column(
@@ -159,7 +171,8 @@ class _HomeState extends State<Home> {
                     currentAccountPicture: new GestureDetector(
                       onTap: (){},
                       child: CircleAvatar(
-                        backgroundColor: Colors.black,
+                        backgroundImage: NetworkImage('https://i.imgur.com/E8co0WJ.jpg'),
+
                       ),
                     ),
                   ),
@@ -176,10 +189,12 @@ class _HomeState extends State<Home> {
                     Navigator.of(super.context).pop();
                     Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
                   },
-                  color: Colors.grey.shade600,
+                  color: Colors.black,
                   child: Text("Signout",
                     style: TextStyle(
-                        color: Colors.white,fontSize: 25.0
+                        color: Colors.white,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w300
                     ),
                   ),
                 ),
@@ -202,9 +217,30 @@ double totalNumberOfHours(){
 void maintainList(var nameOfTask, var selectionState){
   if(selectionState)
     selectedTasks.add(nameOfTask);
-  else
+  else {
     selectedTasks.remove(nameOfTask);
+  }
 }
 String getYearMonthDayFromDate(var date){
   return date.toString().split(" ")[0];
 }
+
+void sendData() {
+
+  String date = getYearMonthDayFromDate(currentDate);
+  String totalHours = totalNumberOfHours().toString();
+
+  Firestore.instance.collection('time').document(date)
+    .setData({'Total Hours': totalHours});
+
+  Fluttertoast.showToast(
+      msg: "Time submitted!",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIos: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.black,
+      fontSize: 14.0
+  );
+}
+
