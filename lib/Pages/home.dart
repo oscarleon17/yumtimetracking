@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 
 class Home extends StatefulWidget {
+
   const Home({
     Key key,
     @required this.user
@@ -25,6 +26,9 @@ var selectedTasks = <String>{};
 List<bool> selectedStates = [false, false, false, false,false];
 
 class _HomeState extends State<Home> {
+  void refresh() {
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,11 +109,11 @@ class _HomeState extends State<Home> {
                 children: <Widget>[
                   Ink(
                     child: ExpansionTile(
-                      title: Text("Projects"),
+                      title: Text("Projects", style: TextStyle(color: Colors.white),),
                       children: <Widget>[
                         CheckboxListTile(
                           value: selectedStates[0],
-                          title: Text('Hardware Support'),
+                          title: Text('Hardware Support', style: TextStyle(color: Colors.white),),
                           onChanged: (bool value){setState(() {
                             maintainList('Hardware Support', value);
                             //createHoursTile(tasks.elementAt(0),0);
@@ -118,7 +122,7 @@ class _HomeState extends State<Home> {
                         ),
                         CheckboxListTile(
                           value: selectedStates[1],
-                          title: Text('Software Support'),
+                          title: Text('Software Support', style: TextStyle(color: Colors.white),),
                           onChanged: (bool value){setState(() {
                             maintainList('Software Support', value);
                             //createHoursTile(tasks.elementAt(0),0);
@@ -127,7 +131,7 @@ class _HomeState extends State<Home> {
                         ),
                         CheckboxListTile(
                           value: selectedStates[2],
-                          title: Text('Vacation'),
+                          title: Text('Vacation', style: TextStyle(color: Colors.white),),
                           onChanged: (bool value){setState(() {
                             maintainList('Vacation', value);
                             //createHoursTile(tasks.elementAt(0),0);
@@ -141,7 +145,7 @@ class _HomeState extends State<Home> {
                   Container(height: 20,),
                   Container(
                     height: 600.0,
-                    child: CompleteList(),
+                    child: CompleteList(notifyParent: refresh),
                   ),
                 ],
               ),
@@ -152,7 +156,26 @@ class _HomeState extends State<Home> {
 
           //should send the data from the array of hours, clear the array, and switch to the next day
           //currently just updates the display of the number of hours selected
-          MySubmitButton(),
+          //MySubmitButton(),
+          Expanded(
+            child: SizedBox.expand(
+              child: RaisedButton(
+                color: Colors.black,
+                //calls the function defined in main.dart and updates the text displayed via the setState function
+                child: Text("Submit ${totalNumberOfHours().toString()} hours",
+
+                  style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 17,
+                      color: Colors.white
+                  ),
+                ),
+                //onPressed:sendData,
+                onPressed:(){sendData();},
+              ),
+            ),
+            flex: 2,
+          ),
         ],
       ),
 
@@ -243,4 +266,5 @@ void sendData() {
       fontSize: 14.0
   );
 }
+
 

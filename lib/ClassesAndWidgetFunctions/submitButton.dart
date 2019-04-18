@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../Pages/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
+///No LONGER USED
+///NOW incorporated into home.dart
 class MySubmitButton extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
